@@ -1,0 +1,14 @@
+# MYAPP/.gitignore
+
+# node_modules (공통)
+**/node_modules/
+
+# logs
+**/logs/
+*.log
+
+# dotenv
+**/.env
+
+# dist (Vue build)
+frontend/dist/

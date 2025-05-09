@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h3 class="mb-4">✏️ 도서 수정</h3>
     <form @submit.prevent="saveBook">
       <label for="no">No.</label>
       <input type="text" id="no" v-model="book.id" readonly />

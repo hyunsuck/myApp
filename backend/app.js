@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`${url}에서 서버가 실행됨`);
+  console.log(`${url} 에서 서버가 실행됨`);
 });
 
 module.exports = app;

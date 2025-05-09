@@ -1,34 +1,31 @@
+<!-- BookInfo.vue -->
 <template>
-  <div class="container" v-if="book">
-    <h3 class="my-3">도서 상세 정보</h3>
-    <table class="table table-bordered">
-      <tbody>
-        <tr>
-          <th>번호</th>
-          <td>{{ book.id }}</td>
-          <th>등록일자</th>
-          <td>{{ book.created_date }}</td>
-        </tr>
-        <tr>
-          <th>제목</th>
-          <td colspan="3">{{ book.title }}</td>
-        </tr>
-        <tr>
-          <th>저자</th>
-          <td>{{ book.writer }}</td>
-          <th>ISBN</th>
-          <td>{{ book.isbn }}</td>
-        </tr>
-        <tr>
-          <th>소개</th>
-          <td colspan="3" style="white-space: pre-wrap">{{ book.content }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="text-center">
-      <button class="btn btn-primary" @click="goEdit">수정</button>
-      <button class="btn btn-secondary ms-2" @click="goList">목록</button>
-    </div>
+  <div class="container">
+    <h3 class="mb-4">📖 도서 상세 목록</h3>
+    <form @submit.prevent="goEdit">
+      <label for="id">번호</label>
+      <input type="text" id="id" :value="book.id" readonly />
+
+      <label for="created_date">등록일자</label>
+      <input type="text" id="created_date" :value="book.created_date" readonly />
+
+      <label for="title">제목</label>
+      <input type="text" id="title" :value="book.title" readonly />
+
+      <label for="writer">작성자</label>
+      <input type="text" id="writer" :value="book.writer" readonly />
+
+      <label for="isbn">ISBN</label>
+      <input type="text" id="isbn" :value="book.isbn" readonly />
+
+      <label for="content">소개</label>
+      <textarea id="content" style="height: 200px" :value="book.content" readonly></textarea>
+
+      <div class="button-wrapper">
+        <button type="submit" class="btn btn-success">✏️ 수정</button>
+        <button type="button" class="btn btn-success" @click="goList">📚 목록</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -37,13 +34,13 @@ import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const book = ref({})
 const route = useRoute()
 const router = useRouter()
+const book = ref({})
 
 onMounted(async () => {
   const id = route.query.id
-  const res = await axios.get(`/api/book/${id}`)
+  const res = await axios.get(`/book/${id}`)
   book.value = res.data[0]
 })
 
@@ -52,12 +49,47 @@ const goEdit = () => {
 }
 
 const goList = () => {
-  router.push('/bookList')
+  router.push('/book')
 }
 </script>
 
 <style scoped>
-table * {
-  text-align: center;
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+button[type="submit"],
+button[type="button"] {
+  background-color: #04aa6d;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background-color: #45a049;
+}
+.button-wrapper {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  max-width: 700px;
 }
 </style>
