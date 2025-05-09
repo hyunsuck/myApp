@@ -10,5 +10,7 @@
 # dotenv
 **/.env
 
+*.session
+
 # dist (Vue build)
 frontend/dist/
